@@ -6,6 +6,10 @@ public class Enemy : MonoBehaviour {
     public GameObject target;
     public float movementSpeed = 30f;
 
+    public float decelerateSpeed = 0.95f;
+
+    public float bounceSpeed = 0.5f;
+
 	private Rigidbody2D rb2D;
 
     public int chargeIntervalSeconds = 5;
@@ -19,8 +23,14 @@ public class Enemy : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D collision)
     {
         string tag = collision.gameObject.tag;
+        Debug.Log(tag);
         hasCollided = true;
-        rb2D.AddRelativeForce(Vector2.Reflect(lastDirection.normalized, collision.contacts[0].normal) * 0.5f, ForceMode2D.Impulse);
+        rb2D.AddRelativeForce(Vector2.Reflect(lastDirection.normalized, collision.contacts[0].normal) * bounceSpeed, ForceMode2D.Impulse);
+
+         if (collision.gameObject.tag == "Breakable")
+		{
+			collision.gameObject.SetActive(false);
+		}
     }
 
 	void Start ()
@@ -34,7 +44,6 @@ public class Enemy : MonoBehaviour {
         float currentTime = Time.time;
         bool shouldCharge = !isCharging && (currentTime - timeSinceLastCharge > chargeIntervalSeconds);
 
-
         if (rb2D.velocity == Vector2.zero) {
             hasCollided = false;
             isCharging = false;
@@ -47,8 +56,8 @@ public class Enemy : MonoBehaviour {
         }
         else if (hasCollided)
         {
-            rb2D.velocity = rb2D.velocity * 0.9f;
-            rb2D.angularVelocity = rb2D.angularVelocity * 0.9f; 
+            rb2D.velocity = rb2D.velocity * decelerateSpeed;
+            rb2D.angularVelocity = rb2D.angularVelocity * decelerateSpeed; 
         }
     }
 
@@ -58,11 +67,5 @@ public class Enemy : MonoBehaviour {
         Vector3 direction = targetPosition - transform.position;
         lastDirection = direction;
         rb2D.AddRelativeForce(direction.normalized * movementSpeed, ForceMode2D.Force);
-    }
-
-    void StopCharge()
-    {
-        isCharging = false;
-        rb2D.velocity = Vector2.zero;
     }
 }

@@ -13,7 +13,7 @@ public class Wall : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log(collision.gameObject.name);
+        Debug.Log("Wall Collided with" + collision.gameObject.name);
     }
 
 }

@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Breakable
+  - Right Wall
+  - Left Wall
+  - Top Wall
+  - Bottom Wall
   layers:
   - Default
   - TransparentFX
