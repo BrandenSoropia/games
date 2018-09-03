@@ -60,8 +60,14 @@ public class Player : MonoBehaviour {
 		{
 			Debug.Log("Invulnerable!");
 			UpdateHealth(-1);
-			timeDamageTaken = currentTime;
-			isInvulnerable = true;
+			if (health == 0)
+            {
+                gameObject.SetActive(false);
+            } else
+			{
+				timeDamageTaken = currentTime;
+				isInvulnerable = true;
+			}
 		}
     }
 }

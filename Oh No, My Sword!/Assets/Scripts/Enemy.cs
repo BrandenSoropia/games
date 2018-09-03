@@ -28,11 +28,16 @@ public class Enemy : MonoBehaviour {
         hasCollided = true;
         rb2D.AddRelativeForce(Vector2.Reflect(lastDirection.normalized, collision.contacts[0].normal) * bounceSpeed, ForceMode2D.Impulse);
 
-         if (collision.gameObject.tag == "Breakable")
+        if (collision.gameObject.tag == "Breakable")
 		{
 			collision.gameObject.SetActive(false);
             UpdateHealth(-1);
             Debug.Log("Enemy health: " + health);
+
+            if (health == 0)
+            {
+                gameObject.SetActive(false);
+            }
 		}
     }
 
@@ -50,7 +55,7 @@ public class Enemy : MonoBehaviour {
     void FixedUpdate()
     {   
         float currentTime = Time.time;
-        bool shouldCharge = !isCharging && (currentTime - timeSinceLastCharge > chargeIntervalSeconds);
+        bool shouldCharge = target.activeInHierarchy && !isCharging && (currentTime - timeSinceLastCharge > chargeIntervalSeconds);
 
         if (rb2D.velocity == Vector2.zero) {
             hasCollided = false;
