@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour {
+    public int health = 3;
     public GameObject target;
     public float movementSpeed = 30f;
 
@@ -30,7 +31,14 @@ public class Enemy : MonoBehaviour {
          if (collision.gameObject.tag == "Breakable")
 		{
 			collision.gameObject.SetActive(false);
+            UpdateHealth(-1);
+            Debug.Log("Enemy health: " + health);
 		}
+    }
+
+    void UpdateHealth(int value)
+    {
+        health += value;
     }
 
 	void Start ()
