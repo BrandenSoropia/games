@@ -3,28 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
-	public Player[] players; // Find all player scripts
-	public Enemy[] enemies;
+	public Player playerScript; // Find all player scripts
+	public Enemy[] enemyScripts;
 
 	void Start ()
 	{
-		players = FindObjectsOfType<Player>();
-		enemies = FindObjectsOfType<Enemy>();
+		playerScript = FindObjectOfType<Player>();
+		enemyScripts = FindObjectsOfType<Enemy>();
 	}
 	
 	void FixedUpdate ()
 	{
-		foreach (Player player in players)
+		
+		if (playerScript.health == 0)
 		{
-			if (player.health == 0)
-			{
-				Debug.Log("Game over!");
-			}
+			Debug.Log("Game over!");
 		}
 
-		foreach (Enemy enemy in enemies)
+		foreach (Enemy enemyScript in enemyScripts)
 		{
-			if (enemy.health == 0)
+			if (enemyScript.health == 0)
 			{
 				Debug.Log("Game over!");
 			}
