@@ -13,9 +13,12 @@ public class Player : MonoBehaviour {
 
 	private Rigidbody2D rb2D;
 
+	public PlayerStateGUI playerStateGUIScript;
+
 	// Use this for initialization
 	void Start () {
-		rb2D = GetComponent<Rigidbody2D>();	
+		rb2D = GetComponent<Rigidbody2D>();
+		playerStateGUIScript = FindObjectOfType<PlayerStateGUI>();
 	}
 	
 	// Update is called once per frame
@@ -38,7 +41,6 @@ public class Player : MonoBehaviour {
 	
 		if (isInvulnerable && (Time.time - timeDamageTaken > invulnerabilityAfterDamageTakenTimeSeconds))
 		{
-			Debug.Log("Not Invulnerable!");
 			isInvulnerable = false;
 		}
 	}
@@ -46,24 +48,25 @@ public class Player : MonoBehaviour {
 	void UpdateHealth(int value)
 	{
 		health += value;
-		Debug.Log("Player Health: " + health);
+		bool isDealingDamage = value < 0;
+
+		playerStateGUIScript.UpdateHearts(Mathf.Abs(value), isDealingDamage);
 	}
 
 	void OnCollisionEnter2D(Collision2D collision)
     {
 		float currentTime = Time.time;
-        if (collision.gameObject.tag == "Breakable")
+		
+		if ((collision.gameObject.tag == "Enemy") && !isInvulnerable)
 		{
-			collision.gameObject.SetActive(false);
-		}
-		else if ((collision.gameObject.tag == "Enemy") && !isInvulnerable)
-		{
-			Debug.Log("Invulnerable!");
-			UpdateHealth(-1);
+			int enemyDamage = collision.gameObject.GetComponent<Enemy>().damage;
+			UpdateHealth(-enemyDamage);
+
 			if (health == 0)
             {
                 gameObject.SetActive(false);
-            } else
+            }
+			else
 			{
 				timeDamageTaken = currentTime;
 				isInvulnerable = true;

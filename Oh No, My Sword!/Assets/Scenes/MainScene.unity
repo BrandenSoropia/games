@@ -282,6 +282,7 @@ MonoBehaviour:
   decelerateSpeed: 0.9
   invulnerabilityAfterDamageTakenTimeSeconds: 1
   isInvulnerable: 0
+  playerStateGUIScript: {fileID: 0}
 --- !u!50 &346111950
 Rigidbody2D:
   serializedVersion: 4
@@ -609,13 +610,14 @@ GameObject:
   - component: {fileID: 749312693}
   - component: {fileID: 749312696}
   - component: {fileID: 749312694}
+  - component: {fileID: 749312697}
   m_Layer: 8
   m_Name: Breakable
   m_TagString: Breakable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &749312693
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -680,7 +682,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 749312692}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.038585573, y: -2.0578156, z: -0.026412902}
+  m_LocalPosition: {x: -0.038585573, y: 14.9, z: -0.026412902}
   m_LocalScale: {x: 2.5, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -711,6 +713,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.75}
   m_EdgeRadius: 0
+--- !u!114 &749312697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 749312692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ce547d4572e74b8a93d58eefa8c9349, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
 --- !u!1 &942287606
 GameObject:
   m_ObjectHideFlags: 0
@@ -878,7 +892,7 @@ MonoBehaviour:
     type: 2}
   instantiatedHearts: []
   paddingBetweenHearts: {x: 10, y: 0, z: 0}
-  lastHeartPosition: {x: 0, y: 0, z: 0}
+  rightMostHeartPosition: {x: 0, y: 0, z: 0}
 --- !u!4 &1295419689
 Transform:
   m_ObjectHideFlags: 0
@@ -1396,6 +1410,7 @@ MonoBehaviour:
   isCharging: 0
   hasCollided: 0
   lastDirection: {x: 0, y: 0, z: 0}
+  damage: 1
 --- !u!212 &1998037713
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1449,7 +1464,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1998037711}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -60.3, y: 25, z: -0.37186185}
+  m_LocalPosition: {x: -28.4, y: -6.9, z: -0.37186185}
   m_LocalScale: {x: 20, y: 20, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

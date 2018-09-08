@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour {
 		{
 			if (enemyScript.health == 0)
 			{
-				Debug.Log("Game over!");
+				Debug.Log("You win!");
 			}
 		}
 	}

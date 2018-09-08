@@ -10,7 +10,7 @@ public class PlayerStateGUI : MonoBehaviour {
 	public List<GameObject> instantiatedHearts = new List<GameObject>();
 
 	public Vector3 paddingBetweenHearts = new Vector3(10, 0);
-	public Vector3 lastHeartPosition; // Used for reference when adding/removing hearts
+	public Vector3 rightMostHeartPosition; // Used for reference when adding/removing hearts
 
 	void Start () {
 		playerScript = FindObjectOfType<Player>();
@@ -19,7 +19,7 @@ public class PlayerStateGUI : MonoBehaviour {
 		UpdateHearts(initialPlayerHealth, false);
 	}
 
-	void UpdateHearts(int numberOfHearts, bool isRemovingHearts)
+	public void UpdateHearts(int numberOfHearts, bool isDealingDamage)
 	{
 		Vector3 containerPosition = gameObject.transform.position;
 		Vector3 accumulatedPadding = Vector3.zero; // No padding on initial heart
@@ -28,40 +28,28 @@ public class PlayerStateGUI : MonoBehaviour {
 		GameObject heart;
 		for(int i=0; i < numberOfHearts; i++)
 		{	
-			if (isRemovingHearts)
+			if (isDealingDamage)
 			{
 				int lastHeartIndex = instantiatedHearts.Count - 1;
 				GameObject removedHeart = instantiatedHearts[lastHeartIndex];
 				GameObject.Destroy(removedHeart);
 				instantiatedHearts.RemoveAt(lastHeartIndex);
 
-				lastHeartPosition -= accumulatedPadding;
+				rightMostHeartPosition = removedHeart.transform.position;
 			}
 			else
 			{
 				newHeartPosition = (
-					lastHeartPosition == Vector3.zero
+					rightMostHeartPosition == Vector3.zero
 						? containerPosition
-						: lastHeartPosition
-				) + accumulatedPadding; // Handle udpating hearts if/if not empty
+						: rightMostHeartPosition
+				) + paddingBetweenHearts; // Handle udpating hearts if/if not empty
 
-				lastHeartPosition = newHeartPosition;
+				rightMostHeartPosition = newHeartPosition;
 
 				heart = Instantiate(heartPrefab, newHeartPosition, Quaternion.identity);
 				instantiatedHearts.Add(heart);
 			}
-			
-			accumulatedPadding += paddingBetweenHearts;
-		}
-	}
-	
-	void FixedUpdate () {
-		int healthDifference = Mathf.Abs(playerScript.health - initialPlayerHealth);
-		bool isRemovingHearts = playerScript.health < initialPlayerHealth;
-		Debug.Log(healthDifference);
-		if (healthDifference != 0)
-		{
-			UpdateHearts(healthDifference, isRemovingHearts);
 		}
 	}
 }

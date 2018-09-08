@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour {
     public int health = 3;
     public GameObject target;
-    public float movementSpeed = 30f;
+    public float movementSpeed = 2000f;
 
     public float decelerateSpeed = 0.95f;
 
@@ -21,18 +21,18 @@ public class Enemy : MonoBehaviour {
 
     public Vector3 lastDirection;
 
+    public int damage = 1;
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         string tag = collision.gameObject.tag;
-        Debug.Log(tag);
         hasCollided = true;
         rb2D.AddRelativeForce(Vector2.Reflect(lastDirection.normalized, collision.contacts[0].normal) * bounceSpeed, ForceMode2D.Impulse);
 
         if (collision.gameObject.tag == "Breakable")
 		{
-			collision.gameObject.SetActive(false);
-            UpdateHealth(-1);
-            Debug.Log("Enemy health: " + health);
+            int damage = collision.gameObject.GetComponent<Breakable>().damage;
+            UpdateHealth(-damage);
 
             if (health == 0)
             {
