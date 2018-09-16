@@ -1,15 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 	public Player playerScript; // Find all player scripts
-	public Enemy[] enemyScripts;
+	public Enemy enemyScript;
+	public string gameOverSceneName;
 
 	void Start ()
 	{
 		playerScript = FindObjectOfType<Player>();
-		enemyScripts = FindObjectsOfType<Enemy>();
+		enemyScript = FindObjectOfType<Enemy>();
 	}
 	
 	void FixedUpdate ()
@@ -17,15 +19,23 @@ public class GameManager : MonoBehaviour {
 		
 		if (playerScript.health == 0)
 		{
-			Debug.Log("Game over!");
+			StartCoroutine(LoadAsyncScene(gameOverSceneName));
 		}
 
-		foreach (Enemy enemyScript in enemyScripts)
+		if (enemyScript.health == 0)
 		{
-			if (enemyScript.health == 0)
-			{
-				Debug.Log("You win!");
-			}
+			StartCoroutine(LoadAsyncScene(gameOverSceneName));
 		}
+	}
+
+	IEnumerator LoadAsyncScene(string sceneName)
+	{
+		// TODO: Pass over if win/loss to new scene to render appropriate message
+		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
 	}
 }
