@@ -7,6 +7,13 @@ public class GameManager : MonoBehaviour {
 	public Player playerScript; // Find all player scripts
 	public Enemy enemyScript;
 	public string gameOverSceneName;
+	public bool isGameOver = false;
+	public string gameOverMessage = "";
+
+	void Awake()
+	{
+		DontDestroyOnLoad(transform.gameObject);
+	}
 
 	void Start ()
 	{
@@ -16,15 +23,21 @@ public class GameManager : MonoBehaviour {
 	
 	void FixedUpdate ()
 	{
-		
-		if (playerScript.health == 0)
+		if (!isGameOver)
 		{
-			StartCoroutine(LoadAsyncScene(gameOverSceneName));
-		}
+			if (playerScript.health == 0)
+			{
+				isGameOver = true;
+				gameOverMessage = "You lose!";
+				StartCoroutine(LoadAsyncScene(gameOverSceneName));
+			}
 
-		if (enemyScript.health == 0)
-		{
-			StartCoroutine(LoadAsyncScene(gameOverSceneName));
+			if (enemyScript.health == 0)
+			{
+				isGameOver = true;
+				gameOverMessage = "You win!";
+				StartCoroutine(LoadAsyncScene(gameOverSceneName));
+			}
 		}
 	}
 

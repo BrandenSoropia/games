@@ -265,7 +265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd123e6d345d64836958c8088a835bbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
+  health: 1
   movementSpeed: 200
   decelerateSpeed: 0.9
   invulnerabilityAfterDamageTakenTimeSeconds: 1
@@ -1270,6 +1270,8 @@ MonoBehaviour:
   playerScript: {fileID: 0}
   enemyScript: {fileID: 0}
   gameOverSceneName: GameOverScene
+  isGameOver: 0
+  gameOverMessage: 
 --- !u!1 &1997357404
 GameObject:
   m_ObjectHideFlags: 0
