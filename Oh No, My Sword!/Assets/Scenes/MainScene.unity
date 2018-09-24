@@ -1142,10 +1142,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   breakable: {fileID: 1188812103469758, guid: fb306ea8bc3124cd2b15a4f3dc3523a5, type: 2}
   container: {fileID: 1297993424}
-  numberOfBreakablesToGenerate: 2
+  numberOfBreakablesToGenerate: 5
   containerPosition: {x: 0, y: 0, z: 0}
-  containerSize: {x: 0, y: 0, z: 0}
+  containerExtents: {x: 0, y: 0, z: 0}
   breakableSize: {x: 0, y: 0, z: 0}
+  containableSpace: {x: 0, y: 0, z: 0}
 --- !u!4 &1961044297
 Transform:
   m_ObjectHideFlags: 0
@@ -1276,9 +1277,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63636f6f8dff244318de9e91f1ab44ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1
+  health: 99
   target: {fileID: 346111948}
-  movementSpeed: 2000
+  movementSpeed: 3000
   decelerateSpeed: 0.95
   bounceSpeed: 0.95
   chargeIntervalSeconds: 3
